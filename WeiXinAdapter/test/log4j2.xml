@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+	<properties>
+		<property name="LAYOUT">%d{ISO8601} [%t] @%C{1.} %-5level %msg%n%throwable</property>
+	</properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT" follow="true">
+			<PatternLayout charset="GBK" pattern="${LAYOUT}" />
+		</Console>
+	</Appenders>
+	<Loggers>
+		<!-- Root Logger -->
+		<Root level="debug">
+			<AppenderRef ref="Console" />
+		</Root>
+	</Loggers>
+</Configuration>

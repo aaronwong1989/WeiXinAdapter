@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- status:log4j2加载状态日志级别 -->
+<!-- monitorInterval:重新加载配置的间隔(30min) -->
+<Configuration status="info" monitorInterval="1800">
+	<properties>
+		<property name="LOG_HOME">/home/weixin/log</property>
+		<property name="BACKUP_HOME">/home/weixin/logback</property>
+		<property name="LAYOUT">%d{ISO8601} %-20t %-20C{1} %-5level %msg%n%throwable</property>
+	</properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT" follow="true">
+			<PatternLayout charset="GBK" pattern="${LAYOUT}" />
+		</Console>
+
+		<!-- 默认日志 -->
+		<RollingRandomAccessFile name="DefaultApd" fileName="${LOG_HOME}/default.log"
+			filePattern="${BACKUP_HOME}/$${date:yyyyMMdd}/default-%d{yyyyMMdd}-%i.log" immediateFlush="false"
+			append="true" bufferSize="128">
+			<PatternLayout charset="UTF-8" pattern="${LAYOUT}" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="100MB" />
+			</Policies>
+			<DefaultRolloverStrategy />
+		</RollingRandomAccessFile>
+
+		<!-- 网关上行交易日志 -->
+		<RollingRandomAccessFile name="InApd" fileName="${LOG_HOME}/in.log"
+			filePattern="${BACKUP_HOME}/$${date:yyyyMMdd}/in-%d{yyyyMMdd}-%i.log" immediateFlush="false"
+			append="true" bufferSize="128">
+			<PatternLayout charset="UTF-8" pattern="${LAYOUT}" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="100MB" />
+			</Policies>
+			<DefaultRolloverStrategy />
+		</RollingRandomAccessFile>
+
+		<!-- 网关下行交易日志 -->
+		<RollingRandomAccessFile name="OutApd" fileName="${LOG_HOME}/out.log"
+			filePattern="${BACKUP_HOME}/$${date:yyyyMMdd}/out-%d{yyyyMMdd}-%i.log" immediateFlush="false"
+			append="true" bufferSize="128">
+			<PatternLayout charset="UTF-8" pattern="${LAYOUT}" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="100MB" />
+			</Policies>
+			<DefaultRolloverStrategy />
+		</RollingRandomAccessFile>
+
+	</Appenders>
+	<Loggers>
+		<!-- 上线前删除下文所有的Console appender_ref -->
+
+		<!-- in Loggers -->
+		<logger level="info" name="inLogger" additivity="false">
+			<AppenderRef ref="InApd" />
+			<AppenderRef ref="Console" />
+		</logger>
+
+		<!-- out Loggers -->
+		<logger level="info" name="outLogger" additivity="false">
+			<AppenderRef ref="OutApd" />
+			<AppenderRef ref="Console" />
+		</logger>
+
+		<!-- Root Logger -->
+		<Root level="info">
+			<AppenderRef ref="DefaultApd" />
+			<AppenderRef ref="Console" />
+		</Root>
+	</Loggers>
+</Configuration>
