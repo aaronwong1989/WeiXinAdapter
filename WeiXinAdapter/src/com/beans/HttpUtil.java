@@ -60,11 +60,26 @@ public class HttpUtil {
     }
 
     /**
+     * 采用默认编码发送get请求
+     *
+     * @author Aaron
+     * @version 2015年9月20日
+     * @param url
+     * @return
+     * @throws IOException
+     * @throws URISyntaxException
+     */
+    public static String sendGet(String url) throws IOException, URISyntaxException {
+        return sendGet(url, DEFAULT_ENCODING, null);
+
+    }
+
+    /**
      * 采用指定编码发送get请求并附带URL参数
      *
      * @author huangzhong_hui@163.com
      * @version 2014年12月20日
-     * @param uri
+     * @param url
      * @param encoding
      *            default is null (UTF-8)
      * @param urlParams
@@ -73,24 +88,22 @@ public class HttpUtil {
      * @throws IOException
      * @throws URISyntaxException
      */
-    public static String sendGet(URI uri, String encoding, Map<String, String> urlParams) throws IOException,
-            URISyntaxException {
+    public static String sendGet(String url, String encoding, Map<String, String> urlParams) throws IOException, URISyntaxException {
         long begin = System.currentTimeMillis();
         if (StringUtils.isEmpty(encoding)) {
             encoding = DEFAULT_ENCODING;
         }
         String retStr = "", resp = "";
         if (urlParams != null) {
-            URIBuilder builder = new URIBuilder(uri);
+            URIBuilder builder = new URIBuilder(url);
             for (Entry<String, String> e : urlParams.entrySet()) {
-                builder = builder.addParameter(URLEncoder.encode(e.getKey(), encoding),
-                        URLEncoder.encode(e.getValue(), encoding));
+                builder = builder.addParameter(URLEncoder.encode(e.getKey(), encoding), URLEncoder.encode(e.getValue(), encoding));
             }
-            uri = builder.build();
+            url = builder.build().toString();
         }
-        logger.info("send GET to : {}", uri.toString());
+        logger.info("send GET to : {}", url);
 
-        ClientHttpRequest request = requestFactory.createRequest(uri, HttpMethod.GET);
+        ClientHttpRequest request = requestFactory.createRequest(new URI(url), HttpMethod.GET);
         ClientHttpResponse response = request.execute();
         HttpStatus status = response.getStatusCode();
         if (HttpStatus.OK.value() == status.value()) {
@@ -111,13 +124,13 @@ public class HttpUtil {
      *
      * @author huangzhong_hui@163.com
      * @version 2014年12月20日
-     * @param uri
+     * @param url
      * @return
      * @throws IOException
      * @throws URISyntaxException
      */
-    public static String sendPost(URI uri) throws IOException, URISyntaxException {
-        return sendPost(uri, DEFAULT_ENCODING);
+    public static String sendPost(String url) throws IOException, URISyntaxException {
+        return sendPost(url, DEFAULT_ENCODING);
     }
 
     /**
@@ -125,14 +138,14 @@ public class HttpUtil {
      *
      * @author huangzhong_hui@163.com
      * @version 2014年12月20日
-     * @param uri
+     * @param url
      * @param encoding
      * @return
      * @throws IOException
      * @throws URISyntaxException
      */
-    public static String sendPost(URI uri, String encoding) throws IOException, URISyntaxException {
-        return sendPost(uri, DEFAULT_ENCODING, null);
+    public static String sendPost(String url, String encoding) throws IOException, URISyntaxException {
+        return sendPost(url, DEFAULT_ENCODING, null);
     }
 
     /**
@@ -140,15 +153,15 @@ public class HttpUtil {
      *
      * @author huangzhong_hui@163.com
      * @version 2014年12月20日
-     * @param uri
+     * @param url
      * @param encoding
      * @param trxData
      * @return
      * @throws IOException
      * @throws URISyntaxException
      */
-    public static String sendPost(URI uri, String encoding, String trxData) throws IOException, URISyntaxException {
-        return sendPost(uri, encoding, trxData, null);
+    public static String sendPost(String url, String encoding, String trxData) throws IOException, URISyntaxException {
+        return sendPost(url, encoding, trxData, null);
     }
 
     /**
@@ -156,7 +169,7 @@ public class HttpUtil {
      *
      * @author huangzhong_hui@163.com
      * @version 2014年12月20日
-     * @param uri
+     * @param url
      * @param encoding
      * @param trxData
      * @param urlParams
@@ -164,25 +177,23 @@ public class HttpUtil {
      * @throws IOException
      * @throws URISyntaxException
      */
-    public static String sendPost(URI uri, String encoding, String trxData, Map<String, String> urlParams) throws IOException,
-            URISyntaxException {
+    public static String sendPost(String url, String encoding, String trxData, Map<String, String> urlParams) throws IOException, URISyntaxException {
         long begin = System.currentTimeMillis();
         if (StringUtils.isEmpty(encoding)) {
             encoding = DEFAULT_ENCODING;
         }
         String retStr = "", resp = "";
         if (urlParams != null) {
-            URIBuilder builder = new URIBuilder(uri);
+            URIBuilder builder = new URIBuilder(url);
             for (Entry<String, String> e : urlParams.entrySet()) {
-                builder = builder.addParameter(URLEncoder.encode(e.getKey(), encoding),
-                        URLEncoder.encode(e.getValue(), encoding));
+                builder = builder.addParameter(URLEncoder.encode(e.getKey(), encoding), URLEncoder.encode(e.getValue(), encoding));
             }
-            uri = builder.build();
+            url = builder.build().toString();
         }
-        logger.info("send POST to : {}", uri.toString());
+        logger.info("send POST to : {}", url);
         logger.info("send trxData : {}", trxData);
 
-        ClientHttpRequest request = requestFactory.createRequest(uri, HttpMethod.POST);
+        ClientHttpRequest request = requestFactory.createRequest(new URI(url), HttpMethod.POST);
         // 有发送数据
         if (trxData != null) {
             OutputStream out = request.getBody();
@@ -210,7 +221,7 @@ public class HttpUtil {
      *
      * @author huangzhong_hui@163.com
      * @version 2014年12月20日
-     * @param uri
+     * @param url
      * @param encoding
      * @param trxData
      * @param urlParams
@@ -218,21 +229,22 @@ public class HttpUtil {
      * @throws IOException
      * @throws URISyntaxException
      */
-    public static JSONObject sendPostWithToken(URI uri, String encoding, String trxData, Map<String, String> urlParams)
+    public static JSONObject sendPostWithToken(String url, String encoding, String trxData, Map<String, String> urlParams)
             throws IOException, URISyntaxException {
-        URIBuilder builder = new URIBuilder(uri);
+        URIBuilder builder = new URIBuilder(url);
         builder = builder.addParameter(TOKEN, AccessTokenUtil.getToken());
-        uri = builder.build();
-        JSONObject ret = JSON.parseObject(sendPost(uri, encoding, trxData, urlParams));
+        url = builder.build().toString();
+        JSONObject ret = JSON.parseObject(sendPost(url, encoding, trxData, urlParams));
 
         int retCd = ret.getIntValue(ERROR_CODE);
         // token超时,获取新的TOKEN重新发起
         if (TOKEN_TIMEOUNT == retCd) {
             logger.info("token timeout,get new,and send post again");
             builder.setParameter(TOKEN, AccessTokenUtil.getNewToken());
-            uri = builder.build();
-            ret = JSON.parseObject(sendPost(uri, encoding, trxData, urlParams));
+            url = builder.build().toString();
+            ret = JSON.parseObject(sendPost(url, encoding, trxData, urlParams));
         }
         return ret;
     }
+
 }

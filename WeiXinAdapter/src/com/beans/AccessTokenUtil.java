@@ -1,7 +1,6 @@
 package com.beans;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.apache.logging.log4j.LogManager;
@@ -62,7 +61,6 @@ public class AccessTokenUtil {
     public static String getNewToken() {
         JSONObject token = new JSONObject();
         try {
-            URI uri = new URI(LOCAL_TOKEN_URL);
             synchronized (TOKEN_LOCK) {
                 // 多线程同时竞争从local_token_server获取新token时,如果一个线程进入这段代码并成功获取了token
                 // 后续进入这段代码的线程无需再次从local_token_server获取
@@ -70,7 +68,7 @@ public class AccessTokenUtil {
                 if (avaliable_just_now) {
                     return current_token;
                 } else {
-                    String resp = HttpUtil.sendGet(uri, null, null);
+                    String resp = HttpUtil.sendGet(LOCAL_TOKEN_URL, null, null);
                     token = JSON.parseObject(resp);
                     if (token.containsKey("access_token")) {
                         last_f5_time = System.currentTimeMillis() - 10 * token.getIntValue("expires_in");

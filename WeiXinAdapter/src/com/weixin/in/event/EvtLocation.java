@@ -23,19 +23,19 @@ public class EvtLocation extends InBase {
      * 地理位置纬度
      */
     @XStreamAlias("Latitude")
-    private double            latitude;
+    private double latitude;
 
     /**
      * 地理位置经度
      */
     @XStreamAlias("Longitude")
-    private double            longitude;
+    private double longitude;
 
     /**
      * 地理位置精度
      */
     @XStreamAlias("Precision")
-    private double            precision;
+    private double precision;
 
     public EvtLocation() {
         super.setMsgType("event");

@@ -12,7 +12,7 @@ package com.beans;
  * @version 2014Äê12ÔÂ20ÈÕ
  */
 public enum LoggerEnum {
-    errorLogger("errorLogger"), serviceLogger("serviceLogger");
+    gateway_in("gateway.in"), gateway_out("gateway.out");
 
     private final String value;
 

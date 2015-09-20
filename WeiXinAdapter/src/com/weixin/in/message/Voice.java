@@ -14,19 +14,19 @@ public class Voice extends InBase {
      * 语音格式，如amr，speex等
      */
     @XStreamAlias("Format")
-    private String            format;
+    private String format;
 
     /**
      * 语音消息媒体id，可以调用多媒体文件下载接口拉取数据
      */
     @XStreamAlias("MediaId")
-    private String            mediaId;
+    private String mediaId;
 
     /**
      * 语音识别结果，UTF8编码
      */
     @XStreamAlias("Recognition")
-    private String            recognition;
+    private String recognition;
 
     /**
      * 语音消息

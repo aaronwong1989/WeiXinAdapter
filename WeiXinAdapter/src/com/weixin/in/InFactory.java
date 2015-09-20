@@ -45,8 +45,7 @@ public class InFactory {
         // 普通消息类
         advanceXStream.registerParserClass(Text.class, Image.class, Link.class, Video.class, Voice.class, MsgLocation.class);
         // 事件类
-        advanceXStream.registerParserClass(Click.class, MsgLocation.class, Scan.class, Subscribe.class, UnSubscribe.class,
-                View.class);
+        advanceXStream.registerParserClass(Click.class, MsgLocation.class, Scan.class, Subscribe.class, UnSubscribe.class, View.class);
     }
 
     /**

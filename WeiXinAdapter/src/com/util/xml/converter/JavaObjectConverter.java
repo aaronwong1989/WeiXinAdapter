@@ -50,8 +50,7 @@ public class JavaObjectConverter implements Converter {
 
         if (declaredFields == null || declaredFields.size() <= 0) {
 
-            return;
-        }
+        return; }
 
         for (Field field : declaredFields) {
 

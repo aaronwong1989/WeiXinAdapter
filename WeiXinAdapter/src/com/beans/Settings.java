@@ -5,7 +5,6 @@
  */
 package com.beans;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Properties;
 
@@ -143,9 +142,7 @@ public class Settings {
     public static String getStringValue(String settingBean, String key) {
         Properties prop = (Properties) SpringContextUtils.getBean(settingBean);
         String sValue = prop.getProperty(key);
-        if (sValue == null) {
-            return "";
-        }
+        if (sValue == null) { return ""; }
         return sValue;
     }
 
@@ -157,13 +154,13 @@ public class Settings {
      * @return
      * @throws URISyntaxException
      */
-    public static URI getTokenUri() throws URISyntaxException {
+    public static String getTokenUrl() throws URISyntaxException {
         String url = Settings.getStringValue("settings", "token_url");
         String appid = Settings.getStringValue("settings", "appid");
         String secret = Settings.getStringValue("settings", "secret");
         url = url.replace("$[APPID]", appid);
         url = url.replace("$[APPSECRET]", secret);
-        return new URI(url);
+        return url;
     }
 
     /**

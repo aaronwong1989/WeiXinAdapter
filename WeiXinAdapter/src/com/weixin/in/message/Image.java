@@ -15,13 +15,13 @@ public class Image extends InBase {
      * 图片消息媒体id，可以调用多媒体文件下载接口拉取数据
      */
     @XStreamAlias("MediaId")
-    private String            mediaId;
+    private String mediaId;
 
     /**
      * 图片链接
      */
     @XStreamAlias("PicUrl")
-    private String            picUrl;
+    private String picUrl;
 
     /**
      * 图片消息

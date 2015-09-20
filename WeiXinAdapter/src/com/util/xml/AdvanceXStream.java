@@ -18,12 +18,12 @@ import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 
 /**
  * XStream增强版
- * */
+ */
 public class AdvanceXStream {
     /**
      * 日志操作
      */
-    private static final Logger logger         = LogManager.getLogger(AdvanceXStream.class);
+    private static final Logger logger = LogManager.getLogger(AdvanceXStream.class);
 
     /**
      * 操作名称
@@ -34,18 +34,18 @@ public class AdvanceXStream {
      * CDDATA修饰符开始
      *
      */
-    private static final String PREFIX_CDATA   = "<![CDATA[";
+    private static final String PREFIX_CDATA = "<![CDATA[";
 
     /**
      * CDDATA修饰符结束
      *
      */
-    private static final String SUFFIX_CDATA   = "]]>";
+    private static final String SUFFIX_CDATA = "]]>";
 
     /**
      * 封装对象
      */
-    private XStream             xStream;
+    private XStream xStream;
 
     public AdvanceXStream() {
 
@@ -86,9 +86,7 @@ public class AdvanceXStream {
      */
     public Object fromXml(String xml) {
 
-        if (StringUtils.isBlank(xml)) {
-            return null;
-        }
+        if (StringUtils.isBlank(xml)) { return null; }
 
         return this.xStream.fromXML(xml);
     }
@@ -112,13 +110,11 @@ public class AdvanceXStream {
 
         if (clazs == null || clazs.length <= 0) {
 
-            return;
-        }
+        return; }
 
         if (this.xStream == null) {
 
-            return;
-        }
+        return; }
 
         for (Class<?> clz : clazs) {
 
@@ -145,9 +141,7 @@ public class AdvanceXStream {
      */
     public String toArributeXML(Object obj) {
 
-        if (obj == null) {
-            return null;
-        }
+        if (obj == null) { return null; }
 
         StringBuilder xmlBuilder = new StringBuilder(100);
         List<Field> declaredFields = FieldsTool.getAllFields(obj);
@@ -189,8 +183,7 @@ public class AdvanceXStream {
 
         if (obj == null) {
 
-            return null;
-        }
+        return null; }
         return this.xStream.toXML(obj);
     }
 

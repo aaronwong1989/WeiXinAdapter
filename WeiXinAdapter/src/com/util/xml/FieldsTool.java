@@ -81,45 +81,25 @@ public class FieldsTool {
     @SuppressWarnings("rawtypes")
     public static Class primitiveTypeFor(Class wrapper) {
 
-        if (wrapper == Boolean.class) {
-            return Boolean.TYPE;
-        }
+        if (wrapper == Boolean.class) { return Boolean.TYPE; }
 
-        if (wrapper == Byte.class) {
-            return Byte.TYPE;
-        }
+        if (wrapper == Byte.class) { return Byte.TYPE; }
 
-        if (wrapper == Character.class) {
-            return Character.TYPE;
-        }
+        if (wrapper == Character.class) { return Character.TYPE; }
 
-        if (wrapper == Short.class) {
-            return Short.TYPE;
-        }
+        if (wrapper == Short.class) { return Short.TYPE; }
 
-        if (wrapper == Integer.class) {
-            return Integer.TYPE;
-        }
+        if (wrapper == Integer.class) { return Integer.TYPE; }
 
-        if (wrapper == Long.class) {
-            return Long.TYPE;
-        }
+        if (wrapper == Long.class) { return Long.TYPE; }
 
-        if (wrapper == Float.class) {
-            return Float.TYPE;
-        }
+        if (wrapper == Float.class) { return Float.TYPE; }
 
-        if (wrapper == Double.class) {
-            return Double.TYPE;
-        }
+        if (wrapper == Double.class) { return Double.TYPE; }
 
-        if (wrapper == Void.class) {
-            return Void.TYPE;
-        }
+        if (wrapper == Void.class) { return Void.TYPE; }
 
-        if (wrapper == String.class) {
-            return String.class;
-        }
+        if (wrapper == String.class) { return String.class; }
 
         return null;
     }

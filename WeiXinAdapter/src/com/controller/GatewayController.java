@@ -40,11 +40,10 @@ import com.weixin.in.message.Voice;
 @Controller
 @RequestMapping("/gateway")
 public class GatewayController {
-    private static final String ENCODING  = "UTF-8";
-    private static final Logger ERRLOGGER = LogManager.getLogger(LoggerEnum.errorLogger.value());
-    private static final Logger LOGGER    = LogManager.getLogger(GatewayController.class);
-    private static final String NAME_G    = "【腾讯网关请求: IN】";
-    private static final String NAME_V    = "【网关URL校验】";
+    private static final String ENCODING = "UTF-8";
+    private static final Logger LOGGER   = LogManager.getLogger(LoggerEnum.gateway_in);
+    private static final String NAME_G   = "【腾讯网关请求: IN】";
+    private static final String NAME_V   = "【网关URL校验】";
 
     /**
      * 【腾讯网关请求: IN】.
@@ -69,7 +68,7 @@ public class GatewayController {
             handleInAndResponse(response, in);
 
         } catch (Exception e) {
-            ERRLOGGER.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         }
         LOGGER.info("{}结束,耗时{}ms", NAME_G, System.currentTimeMillis() - start);
     }
@@ -108,9 +107,9 @@ public class GatewayController {
                 return;
             }
         } catch (Exception e) {
-            ERRLOGGER.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         }
-        ERRLOGGER.error("{}失败", NAME_V);
+        LOGGER.error("{}失败", NAME_V);
     }
 
     private String bytes2Hex(byte[] bts) {
@@ -137,7 +136,7 @@ public class GatewayController {
             // to HexString
             strDes = this.bytes2Hex(md.digest());
         } catch (NoSuchAlgorithmException e) {
-            ERRLOGGER.error("Invalid algorithm.");
+            LOGGER.error("Invalid algorithm.");
         }
         return strDes;
     }

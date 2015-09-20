@@ -13,38 +13,38 @@ public class InBase extends ToStringBase {
      * 消息创建时间 （整型）
      */
     @XStreamAlias("CreateTime")
-    private long              createTime;
+    private long createTime;
 
     /**
      * 事件类型<br>
      * MsgType="event"时使用
      */
     @XStreamAlias("Event")
-    private String            event;
+    private String event;
 
     /**
      * 发送方帐号（一个OpenID）
      */
     @XStreamAlias("FromUserName")
-    private String            fromUserName;
+    private String fromUserName;
 
     /**
      * 消息id,64位整型
      */
     @XStreamAlias("MsgId")
-    private long              msgId;
+    private long msgId;
 
     /**
      * 消息类型
      */
     @XStreamAlias("MsgType")
-    private String            msgType;
+    private String msgType;
 
     /**
      * 开发者微信号
      */
     @XStreamAlias("ToUserName")
-    private String            toUserName;
+    private String toUserName;
 
     public long getCreateTime() {
         return this.createTime;

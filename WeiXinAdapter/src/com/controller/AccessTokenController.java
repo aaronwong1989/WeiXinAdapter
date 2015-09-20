@@ -1,7 +1,6 @@
 package com.controller;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -88,7 +87,6 @@ public class AccessTokenController {
     private JSONObject getNewToken() {
         JSONObject token = new JSONObject();
         try {
-            URI uri = Settings.getTokenUri();
             synchronized (TOKEN_LOCK) {
                 // 多线程同时竞争从腾讯获取新token时,如果一个线程进入这段代码并成功获取了token
                 // 后续进入这段代码的线程无需再次从腾讯获取
@@ -96,7 +94,7 @@ public class AccessTokenController {
                 if (avaliable_just_now) {
                     token = this.getCurrentToken();
                 } else {
-                    String resp = HttpUtil.sendGet(uri, null, null);
+                    String resp = HttpUtil.sendGet(Settings.getTokenUrl(), null, null);
                     token = JSON.parseObject(resp);
                     if (token.containsKey("access_token")) {
                         last_f5_time = System.currentTimeMillis();

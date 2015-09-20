@@ -15,25 +15,25 @@ public class MsgLocation extends InBase {
      * 地理位置信息
      */
     @XStreamAlias("Label")
-    private String            label;
+    private String label;
 
     /**
      * 地理位置维度
      */
     @XStreamAlias("Location_X")
-    private double            location_X;
+    private double location_X;
 
     /**
      * 地理位置经度
      */
     @XStreamAlias("Location_Y")
-    private double            location_Y;
+    private double location_Y;
 
     /**
      * 地图缩放大小
      */
     @XStreamAlias("Scale")
-    private int               scale;
+    private int scale;
 
     /**
      * 地理位置消息

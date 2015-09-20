@@ -15,19 +15,19 @@ public class Link extends InBase {
      * 消息描述
      */
     @XStreamAlias("Description")
-    private String            description;
+    private String description;
 
     /**
      * 消息标题
      */
     @XStreamAlias("Title")
-    private String            title;
+    private String title;
 
     /**
      * 消息链接
      */
     @XStreamAlias("Url")
-    private String            url;
+    private String url;
 
     /**
      * 链接消息

@@ -14,7 +14,7 @@ public class Text extends InBase {
      * 文本消息内容
      */
     @XStreamAlias("Content")
-    private String            content;
+    private String content;
 
     /**
      * 文本消息

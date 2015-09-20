@@ -6,7 +6,6 @@
 package com.weixin.in;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.RejectedExecutionHandler;
@@ -57,7 +56,7 @@ public class InHandler {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.lang.Runnable#run()
          */
         @Override
@@ -87,10 +86,8 @@ public class InHandler {
         private void toService() {
             // TODO 可能需要的报文转换
             String trxdata = InFactory.getInstance().toXml(in);
-            URI uri;
             try {
-                uri = new URI(url);
-                HttpUtil.sendPostWithToken(uri, null, trxdata, null);
+                HttpUtil.sendPostWithToken(url, null, trxdata, null);
             } catch (URISyntaxException e) {
                 ERRLOGGER.error("URL有误请检查settings.properties", e);
             } catch (IOException e) {
@@ -101,7 +98,7 @@ public class InHandler {
 
     private static int                      aliveTime;
     private static int                      corePoolSize;
-    private static final Logger             ERRLOGGER = LogManager.getLogger(LoggerEnum.errorLogger.value());
+    private static final Logger             ERRLOGGER = LogManager.getLogger(LoggerEnum.gateway_in);
     /** 消息及事件处理线程池 */
     private static ThreadPoolExecutor       inPool;
     private static InHandler                instacne  = new InHandler();
@@ -109,7 +106,7 @@ public class InHandler {
     private static int                      quenceSize;
     private static RejectedExecutionHandler rejectedHandler;
 
-    private static String                   url;
+    private static String url;
 
     public static InHandler getInstance() {
         return instacne;
@@ -128,8 +125,8 @@ public class InHandler {
                 executor.execute(r);
             }
         };
-        inPool = new ThreadPoolExecutor(corePoolSize, corePoolSize * 2, aliveTime, TimeUnit.SECONDS,
-                new LinkedBlockingQueue<Runnable>(quenceSize), rejectedHandler);
+        inPool = new ThreadPoolExecutor(corePoolSize, corePoolSize * 2, aliveTime, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(quenceSize),
+                rejectedHandler);
         url = Settings.getStringValue("settings", "local_service_url");
     }
 

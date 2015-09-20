@@ -30,7 +30,10 @@ import org.apache.commons.codec.binary.Base64;
  * </ol>
  * 说明：异常java.security.InvalidKeyException:illegal Key Size的解决方案
  * <ol>
- * <li>在官方网站下载JCE无限制权限策略文件（JDK7的下载地址： http://www.oracle.com/technetwork/java/javase /downloads/jce-7-download-432124.html</li>
+ * <li>在官方网站下载JCE无限制权限策略文件:</li>
+ * <li>http://www.oracle.com/technetwork/java/javase/downloads/jce-6-download-429243.html</li>
+ * <li>http://www.oracle.com/technetwork/java/javase /downloads/jce-7-download-432124.html</li>
+ * <li>http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html</li>
  * <li>下载后解压，可以看到local_policy.jar和US_export_policy.jar以及readme.txt</li>
  * <li>如果安装了JRE，将两个jar文件放到%JRE_HOME%\lib\security目录下覆盖原来的文件</li>
  * <li>如果安装了JDK，将两个jar文件放到%JDK_HOME%\jre\lib\security目录下覆盖原来文件</li>
@@ -57,9 +60,7 @@ public class WXBizMsgCrypt {
      *             执行失败，请查看该异常的错误码和具体的错误信息
      */
     public WXBizMsgCrypt(String token, String encodingAesKey, String appId) throws AesException {
-        if (encodingAesKey.length() != 43) {
-            throw new AesException(AesException.IllegalAesKey);
-        }
+        if (encodingAesKey.length() != 43) { throw new AesException(AesException.IllegalAesKey); }
 
         this.token = token;
         this.appId = appId;
@@ -99,9 +100,7 @@ public class WXBizMsgCrypt {
         // 和URL中的签名比较是否相等
         // System.out.println("第三方收到URL中的签名：" + msg_sign);
         // System.out.println("第三方校验签名：" + signature);
-        if (!signature.equals(msgSignature)) {
-            throw new AesException(AesException.ValidateSignatureError);
-        }
+        if (!signature.equals(msgSignature)) { throw new AesException(AesException.ValidateSignatureError); }
 
         // 解密
         String result = this.decrypt(encrypt[1].toString());
@@ -212,9 +211,7 @@ public class WXBizMsgCrypt {
     public String verifyUrl(String msgSignature, String timeStamp, String nonce, String echoStr) throws AesException {
         String signature = SHA1.getSHA1(this.token, timeStamp, nonce, echoStr);
 
-        if (!signature.equals(msgSignature)) {
-            throw new AesException(AesException.ValidateSignatureError);
-        }
+        if (!signature.equals(msgSignature)) { throw new AesException(AesException.ValidateSignatureError); }
 
         String result = this.decrypt(echoStr);
         return result;
@@ -266,9 +263,7 @@ public class WXBizMsgCrypt {
         }
 
         // appid不相同的情况
-        if (!from_appid.equals(this.appId)) {
-            throw new AesException(AesException.ValidateAppidError);
-        }
+        if (!from_appid.equals(this.appId)) { throw new AesException(AesException.ValidateAppidError); }
         return xmlContent;
 
     }
